@@ -23,7 +23,41 @@ async function getProduct(req, res){
     }
 }
 
+async function addToCart(req, res){
+    try {
+        const product = await productService.updateById(req.params, 'add')
+        res.send(product)
+    } catch (error) {
+        logger.error('Cannot add to cart', error)
+        res.status(500).send({ err: 'Failed to add to cart' })
+    }
+}
+
+async function deleteFromCart(req, res){
+    try {
+        const product = await productService.updateById(req.params, 'delete')
+        res.send(product)
+    } catch (error) {
+        logger.error('Cannot delete from cart', error)
+        res.status(500).send({ err: 'Failed to remove from cart' })
+    }
+}
+
+async function getCart(req, res){
+    try {
+        const products = await productService.queryCart()
+        res.send(products)
+    } catch (error) {
+        logger.error('Cannot get Cart', error)
+        res.status(500).send({ err: 'Failed to get Cart' })
+
+    }
+}
+
 module.exports = {
     getProducts,
-    getProduct
+    getProduct,
+    addToCart,
+    deleteFromCart,
+    getCart
 }

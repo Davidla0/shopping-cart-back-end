@@ -9,3 +9,5 @@
 18.12.2022, 11:27:45 - ERROR - cannot find product | ReferenceError: ObjectId is not defined 
 18.12.2022, 11:27:45 - ERROR - Cannot get product | ReferenceError: ObjectId is not defined 
 18.12.2022, 11:28:13 - INFO - Server is running on port: 3031 
+18.12.2022, 12:10:56 - INFO - Server is running on port: 3031 
+18.12.2022, 12:11:06 - INFO - Server is running on port: 3031 

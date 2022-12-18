@@ -24,7 +24,43 @@ async function getById(productId) {
     }
 }
 
+async function updateById(proId, action) {
+    try {
+        let product = await getById(proId)
+        let collection = await dbService.getCollection('cart')
+
+        if(action === 'delete'){
+            product = await collection.findOne({ 'proId': ObjectId(proId) })
+            await collection.deleteOne({ '_id': ObjectId(product._id) })
+                
+        }
+        else{
+            product.proId = product._id
+            delete product._id
+            await collection.insertOne(product) 
+        }
+       
+        return product
+    } catch (error) {
+        logger.error('cannot find products', error)
+        throw error
+    }
+}
+
+async function queryCart() {
+    try {
+        const collection = await dbService.getCollection('cart')
+        const products = await collection.find().toArray()
+        return products
+    } catch (error) {
+        logger.error('cannot find cart', error)
+        throw error
+    }
+}
+
 module.exports = {
     query,
-    getById
+    getById,
+    updateById,
+    queryCart
 }
