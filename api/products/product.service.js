@@ -1,5 +1,6 @@
 const logger = require('../../services/logger.service')
 const dbService = require('../../services/db.service')
+const ObjectId = require('mongodb').ObjectId
 
 async function query() {
     try {
@@ -12,6 +13,18 @@ async function query() {
     }
 }
 
+async function getById(productId) {
+    try {
+        const collection = await dbService.getCollection('products')
+        const product = await collection.findOne({ '_id': ObjectId(productId) })
+        return product
+    } catch (error) {
+        logger.error('cannot find product', error)
+        throw error
+    }
+}
+
 module.exports = {
     query,
+    getById
 }

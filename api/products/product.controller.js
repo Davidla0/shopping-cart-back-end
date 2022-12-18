@@ -12,6 +12,18 @@ async function getProducts(req, res){
     }
 }
 
+async function getProduct(req, res){
+    try {
+        const product = await productService.getById(req.params)
+        res.send(product)
+    } catch (error) {
+        logger.error('Cannot get product', error)
+        res.status(500).send({ err: 'Failed to get product' })
+
+    }
+}
+
 module.exports = {
-    getProducts
+    getProducts,
+    getProduct
 }
